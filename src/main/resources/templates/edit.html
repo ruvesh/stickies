@@ -131,7 +131,7 @@
 	<span>Logged In as: <b th:text="${username}"></b> <a href="/stickies/logout">Logout</a></span>
     <div class="row">
         <div class="first-column">
-            <form class="create_note" th:action="@{/edit-note}" method="post">
+            <form class="create_note" th:action="@{/edit}" method="post">
                 <h2 class="form-title">EDIT NOTE</h2>
                 <input name="id" type="hidden" th:value="${existing_note.id}"/>
                 <textarea name="content" class="form-field" rows="9" th:field="${existing_note.content}"></textarea>

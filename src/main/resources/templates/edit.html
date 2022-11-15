@@ -1,0 +1,157 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Stickies</title>
+</head>
+<style>
+    html,
+    body{
+        height: 100%;
+        background: lightblue;
+    }
+
+    .row{
+        height: 100%;
+    }
+
+    .first-column {
+      float: left;
+      width: 40%;
+      height: 100%;
+    }
+
+    .column {
+      float: left;
+      width: 50%;
+      height: 100%;
+      overflow-y: scroll;
+      -ms-overflow-style: none;  /* Internet Explorer 10+ */
+      scrollbar-width: none;  /* Firefox */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .note{
+        padding: 5px;
+        margin: 10vh auto;
+        border: 1px solid black;
+        width: 40%;
+        height: 250px;
+        overflow-y: scroll;
+        background: lightyellow;
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    .create_note{
+        margin: 30vh auto;
+        border: 1px solid black;
+        padding: 10px;
+        width: 60%;
+        background: white;
+    }
+
+    .form-field{
+        display: block;
+        margin: 2px auto;
+    }
+
+    .form-title{
+        text-align: center;
+        display: block;
+    }
+
+    textarea{
+        resize: none;
+        width:80%;
+    }
+
+    .form-button{
+        display: block;
+        margin: 5px auto;
+        width: 40%;
+        text-align: center;
+        height: 40px;
+        background: black;
+        color: white;
+    }
+
+    .form-button:hover{
+        background: grey;
+        color: white;
+    }
+
+    .column::-webkit-scrollbar, .note::-webkit-scrollbar {
+        display: none;  /* Safari and Chrome */
+    }
+
+    .delete{
+        margin: 3px;
+        background: black;
+        color: white;
+        border: 1px solid black;
+        height: 40px;
+    }
+
+    .delete:hover{
+        background: red;
+        color: black;
+    }
+
+    .edit{
+        margin: 3px;
+        background: black;
+        color: white;
+        border: 1px solid black;
+        height: 40px;
+    }
+
+    .edit:hover{
+        background: yellow;
+        color: black;
+    }
+
+    .note-header{
+        width: 100%;
+    }
+
+    .note-header div{
+        margin-left: auto;
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+    }
+
+</style>
+<body>
+	<span>Logged In as: <b th:text="${username}"></b> <a href="/stickies/logout">Logout</a></span>
+    <div class="row">
+        <div class="first-column">
+            <form class="create_note" th:action="@{/edit-note}" method="post">
+                <h2 class="form-title">EDIT NOTE</h2>
+                <input name="id" type="hidden" th:value="${existing_note.id}"/>
+                <textarea name="content" class="form-field" rows="9" th:field="${existing_note.content}"></textarea>
+                <input class="form-button" type="submit" value="Save">
+            </form>
+        </div>
+
+        <div th:if="${#lists.isEmpty(notes)}" class="column">
+            <div class="form-title">
+                <h2>Create your first note to view it here</h2>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="note" th:each="note: ${notes}">
+                <div class="note-body">
+                    <p th:text="${note.content}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
